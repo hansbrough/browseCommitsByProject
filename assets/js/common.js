@@ -3,8 +3,10 @@
 requirejs.config({
     baseUrl: _baseUrl+'/assets/js',
     paths: {
+        'app':'./app',
         'mixins':'./lib/mixins',
-        'app':'./app'
+        'handlebars':'./lib/handlebars.min',
+        'text':'./lib/text'
     },
     shim: {
 
