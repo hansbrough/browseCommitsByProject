@@ -8,21 +8,19 @@ layout: default_app
   </header>
 
   <div class="app-content">
-    <div class="organizations">
-      <h3>Orgs</h3>
-      <ul id="org_list">
-        <li><a href="#netflix">Netflix</a></li>
-        <li><a href="#twitter">Twitter</a></li>
-      </ul>
-    </div>
+    <section class="org-search grid" id="org_search">
+      <div class="col-1-3"><input type="text" class="medium find-by-name" placeholder="Enter an org name"></div>
+      <div class="col-2-3 current-organization">Netflix</div>
+    </section>
     <div class="grid">
       <div class="col-1-3 repos">
         <h3>Repos</h3>
-        <ul id="repo_list"><li>none</li></ul>
+
+        <ul id="repo_list"></ul>
       </div>
       <div class="col-2-3 commits">
         <h3>Commits</h3>
-        <ul id="commits_list" class="commit-group"><li>none</li></ul>
+        <ul id="commits_list" class="commit-group"></ul>
       </div>
     </div
   </div>

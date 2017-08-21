@@ -7,10 +7,24 @@
 @import "transitions";
 @import "grid";
 
+.page-content {
+  padding-top:10px;
+}
 
 .app-content {
+  /*resets*/
   ul {
     margin-left:0;
+  }
+
+  .org-search {
+    border-bottom: 2px solid $darkGray;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+    .find-by-name {
+      width:100%;
+    }
   }
 
   .repo {

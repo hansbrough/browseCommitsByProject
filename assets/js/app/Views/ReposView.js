@@ -22,7 +22,6 @@ define([
         this.el.addEventListener('click',function(e){
           e.preventDefault();
           if(RE_REPO_LINK.test(e.target.className)){
-            console.log("click:",e.target.className)
             PubSub.publish('repo:item:click',e.target);
           }
         },false);

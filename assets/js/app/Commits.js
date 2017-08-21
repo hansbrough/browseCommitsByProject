@@ -7,11 +7,7 @@ define(['mixins/PubSub',],
 
     //create a store with some getter/setters to hold api response.
     let _store   = {
-      //models:[],
-      getNodeById(id){
-        //console.log("...id:",id);
-        return id ? this.models[id] : null;
-      },
+      models:[],
       set collection(models){
         //console.log("Commits"," store.set: ",models);
         this.models = models;
@@ -23,7 +19,7 @@ define(['mixins/PubSub',],
     * cherry pick props from the verbose repo objects via destructuring
     */
     let _transform = (models=[]) => {
-      console.log("_transform: ",models);
+      //console.log("_transform: ",models);
       return models.map( (model) => {
         let { author, commit, html_url } = model;
         let data = {author, commit, html_url};
@@ -46,14 +42,6 @@ define(['mixins/PubSub',],
           .then( (resp) => resp.json() )
           .then( (json) => _transform(json) )
           .then( (resp) => _store.collection = resp );
-      },
-      getNodeById(id) {
-        //console.log("Commits"," getNodeById: ",id);
-        return (id && _store)? _store.getNodeById(id) : null;
-      },
-      update(question={}) {
-        //console.log("Questions"," update: ", question);
-        _store.replaceNode(question);
       }
     }
 
