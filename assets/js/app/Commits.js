@@ -1,5 +1,5 @@
 //AMD module
-// Get and store objects that describe a Github Repo
+// Get and store objects that describe a commits associated w/a Github Repo
 //depends on html5 fetch api + uses ES6 methods - could benefit from a transpiler
 
 define(['mixins/PubSub',],
@@ -7,18 +7,15 @@ define(['mixins/PubSub',],
 
     //create a store with some getter/setters to hold api response.
     let _store   = {
+      //models:[],
       getNodeById(id){
         //console.log("...id:",id);
         return id ? this.models[id] : null;
       },
       set collection(models){
-        console.log("Repos"," store.set: ",models);
+        //console.log("Commits"," store.set: ",models);
         this.models = models;
-        PubSub.publish('repo:store:set',models);
-      },
-      sort(config={}){
-        console.log("Repos"," store.sort: ",config);
-
+        PubSub.publish('commits:store:set',models);
       }
     };
 
@@ -26,30 +23,32 @@ define(['mixins/PubSub',],
     * cherry pick props from the verbose repo objects via destructuring
     */
     let _transform = (models=[]) => {
-      //console.log("_transform: ",models);
+      console.log("_transform: ",models);
       return models.map( (model) => {
-        let { id, description, language, name, owner, watchers, commits_url } = model;
-        let data = {id, description, language, name, owner, watchers, commits_url};
-        data.commits_url = data.commits_url.split('{/sha}')[0];
+        let { author, commit, html_url } = model;
+        let data = {author, commit, html_url};
+        let msg = data.commit.message.split('\n\n');
+        data.commit.message = msg[0];
+        data.commit.description = msg[1];
+        data.commit.displaySha = data.commit.tree.sha.substring(0,9);
+        data.sha = data.commit.tree.sha;
         return data;
       });
     };
 
     let _Mixin = {
       init() {
-        //console.log("Repos"," init");
-        let api_url = this.api_url;
-        this.add(api_url);
+        console.log("Commits"," init");
       },
       add(api_url){
-        //console.log("Repos"," add"," api_url:",api_url);
+        console.log("Commits"," add"," api_url:",api_url);
         fetch(api_url, {method:'get'})
           .then( (resp) => resp.json() )
           .then( (json) => _transform(json) )
           .then( (resp) => _store.collection = resp );
       },
       getNodeById(id) {
-        //console.log("Questions"," getNodeById: ",id);
+        //console.log("Commits"," getNodeById: ",id);
         return (id && _store)? _store.getNodeById(id) : null;
       },
       update(question={}) {

@@ -2,12 +2,71 @@
 # Front matter comment to ensure Jekyll properly reads file.
 ---
 @import "colors";
+@import "fonts";
 @import "media_queries";
 @import "transitions";
 @import "grid";
 
 
 .app-content {
+  ul {
+    margin-left:0;
+  }
 
+  .repo {
+    list-style:none;
+  }
 
+  .commit-group {
+    display: table;
+    width: 100%;
+    color: #6a737d;
+    table-layout: fixed;
+    border-bottom: 1px solid #e1e4e8;
+
+    .commit {
+      position: relative;
+      display: table-row;
+      list-style: none;
+    }
+
+    .avatar-cell {
+      width: 15%;
+    }
+
+    .avatar {
+      background-color: #6a737d;
+      border-radius: 3px;
+      border-style: none;
+      display: inline-block;
+      line-height: 1;
+      overflow: hidden;
+      vertical-align: middle;
+    }
+
+    .commit-link-cell {
+      width: 15%;
+      text-align: right;
+    }
+
+    .commit-desc {
+      pre {
+        color: #586069;
+        line-height: 1.45;
+        max-width: 700px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+      }
+    }
+  }
+
+  .table-list-cell {
+    position: relative;
+    display: table-cell;
+    padding: 8px 5px;
+    padding-right: 10px;
+    font-size: 12px;vertical-align: top;
+    border-top: 1px solid #eaecef;
+  }
 }
