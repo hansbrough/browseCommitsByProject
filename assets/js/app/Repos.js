@@ -10,32 +10,13 @@ define(['mixins/PubSub',],
       link_header:null,
       set collection(models){
         //console.log("Repos"," store.set: ",models);
-        this.models = this.sort(models);//default to an alpha sort
+        this.models = _sort(models);//default to an alpha sort
         PubSub.publish('repo:store:set',this.models);
       },
-      sort(models=[], config={type:'name'}){
-        console.log("Repos"," store.sort: ",config);
-        if(config.type === 'name'){
-          models.sort((a,b) => {
-            let aName = a.name.toLowerCase();
-            let bName = b.name.toLowerCase();
-            let sort  = 0;
-
-            if(aName < bName){
-              sort = -1;
-            }else if(aName > bName){
-              sort = 1;
-            }
-            return sort;
-          })
-        }else{
-          console.log('...',config.type,' sort');
-          models.sort((a,b) => {
-            return  b[config.type] - a[config.type]
-          })
-        }
-
-        return models;
+      sort(type='name'){
+        console.log("Repos"," store.sort: ",type);
+        _sort(this.models,{type:type});
+        PubSub.publish('repo:store:sort',this.models);
       },
       set headers(links){
         this.link_header = links;
@@ -46,6 +27,34 @@ define(['mixins/PubSub',],
         let next = links.filter((link) => { return /rel="next"/.test(link) } )
         return next.pop().split(';')[0];
       }
+    };
+
+    /**
+    * given a list of repo objects - alpha sort or sort by a numeric property
+    */
+    let _sort = (models=[], config={type:'name'}) => {
+      console.log("Repos"," _sort: ",config);
+      if(config.type === 'name'){
+        models.sort((a,b) => {
+          let aName = a.name.toLowerCase();
+          let bName = b.name.toLowerCase();
+          let sort  = 0;
+
+          if(aName < bName){
+            sort = -1;
+          }else if(aName > bName){
+            sort = 1;
+          }
+          return sort;
+        })
+      }else{
+        console.log('...',config.type,' sort');
+        models.sort((a,b) => {
+          return  b[config.type] - a[config.type]
+        })
+      }
+
+      return models;
     };
 
     /**
@@ -84,6 +93,9 @@ define(['mixins/PubSub',],
         //ex. return value '<https://api.github.com/organizations/913567/repos?per_page=100&page=2>'
         //could take the form of a 'more' link in UI or we could automatically make recursive api calls
         return _store.getNextLink();
+      },
+      sort(type){
+        _store.sort(type);
       }
     }
 

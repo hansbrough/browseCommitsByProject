@@ -34,6 +34,11 @@ define([
         PubSub.subscribe('org:store:set', (model) => {
           _RPS.add(model.repos_url);
         });
+        /*
+        setTimeout(function(){
+          _RPS.sort('forks');
+        },5000)
+        */
       }
     };
 

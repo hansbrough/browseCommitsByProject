@@ -14,7 +14,8 @@ define([
         //console.log("ReposView"," init");
         this.el = document.getElementById('repo_list');
         this.template = Handlebars.compile(RepoTemplate);
-        PubSub.subscribe('repo:store:set', this.render.bind(this) );//intial data load
+        PubSub.subscribe('repo:store:set', this.render.bind(this) );
+        PubSub.subscribe('repo:store:sort', this.render.bind(this) );
         this.delegateEvts();
       },
       delegateEvts(){
