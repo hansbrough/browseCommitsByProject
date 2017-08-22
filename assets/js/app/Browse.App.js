@@ -31,7 +31,9 @@ define([
         //mediate some events
         PubSub.subscribe('repo:item:click', _CMTS.add );
         PubSub.subscribe('search:input:entered', _ORG.add );
-        PubSub.subscribe('org:store:set', _RPS.add );
+        PubSub.subscribe('org:store:set', (model) => {
+          _RPS.add(model.repos_url);
+        });
       }
     };
 

@@ -10,12 +10,32 @@ define(['mixins/PubSub',],
       link_header:null,
       set collection(models){
         //console.log("Repos"," store.set: ",models);
-        this.models = models;
-        PubSub.publish('repo:store:set',models);
+        this.models = this.sort(models);//default to an alpha sort
+        PubSub.publish('repo:store:set',this.models);
       },
-      sort(config={}){
+      sort(models=[], config={type:'name'}){
         console.log("Repos"," store.sort: ",config);
+        if(config.type === 'name'){
+          models.sort((a,b) => {
+            let aName = a.name.toLowerCase();
+            let bName = b.name.toLowerCase();
+            let sort  = 0;
 
+            if(aName < bName){
+              sort = -1;
+            }else if(aName > bName){
+              sort = 1;
+            }
+            return sort;
+          })
+        }else{
+          console.log('...',config.type,' sort');
+          models.sort((a,b) => {
+            return  b[config.type] - a[config.type]
+          })
+        }
+
+        return models;
       },
       set headers(links){
         this.link_header = links;
