@@ -3,11 +3,13 @@
 
 define([
   'mixins/PubSub',
+  'mixins/SortableList',
   'handlebars',
   'text!'+_baseUrl+'/assets/js/app/templates/repo.tmpl?noext',
 ],
-  function (PubSub, Handlebars, RepoTemplate) {
+  function (PubSub, SortableBehavior, Handlebars, RepoTemplate) {
     const RE_REPO_LINK = /repo-commits/;
+    const CSS_SRTBLE   = 'sortable-mixin';
 
     let _View = {
       init() {
@@ -16,6 +18,9 @@ define([
         this.template = Handlebars.compile(RepoTemplate);
         PubSub.subscribe('repo:store:set', this.render.bind(this) );
         PubSub.subscribe('repo:store:sort', this.render.bind(this) );
+        let _SRTBLE = Object.create(SortableBehavior,{'el':{'value':CSS_SRTBLE}});
+        _SRTBLE.init();
+        
         this.delegateEvts();
       },
       delegateEvts(){

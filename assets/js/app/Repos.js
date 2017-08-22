@@ -2,7 +2,7 @@
 // Get and store objects that describe a Github Repo
 //depends on html5 fetch api + uses ES6 methods - could benefit from a transpiler
 
-define(['mixins/PubSub',],
+define(['mixins/PubSub'],
   function (PubSub) {
 
     //create a store with some getter/setters to hold api response.
@@ -14,7 +14,7 @@ define(['mixins/PubSub',],
         PubSub.publish('repo:store:set',this.models);
       },
       sort(type='name'){
-        console.log("Repos"," store.sort: ",type);
+        //console.log("Repos"," store.sort: ",type);
         _sort(this.models,{type:type});
         PubSub.publish('repo:store:sort',this.models);
       },
@@ -33,7 +33,7 @@ define(['mixins/PubSub',],
     * given a list of repo objects - alpha sort or sort by a numeric property
     */
     let _sort = (models=[], config={type:'name'}) => {
-      console.log("Repos"," _sort: ",config);
+      //console.log("Repos"," _sort: ",config);
       if(config.type === 'name'){
         models.sort((a,b) => {
           let aName = a.name.toLowerCase();
@@ -48,7 +48,7 @@ define(['mixins/PubSub',],
           return sort;
         })
       }else{
-        console.log('...',config.type,' sort');
+        //console.log('...',config.type,' sort');
         models.sort((a,b) => {
           return  b[config.type] - a[config.type]
         })
@@ -94,8 +94,8 @@ define(['mixins/PubSub',],
         //could take the form of a 'more' link in UI or we could automatically make recursive api calls
         return _store.getNextLink();
       },
-      sort(type){
-        _store.sort(type);
+      sort(config={}){
+        _store.sort(config.type);
       }
     }
 

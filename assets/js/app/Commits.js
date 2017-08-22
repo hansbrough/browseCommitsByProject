@@ -19,7 +19,7 @@ define(['mixins/PubSub',],
     * cherry pick props from the verbose repo objects via destructuring
     */
     let _transform = (models=[]) => {
-      //console.log("_transform: ",models);
+      //console.log("Commits"," _transform: ",models);
       return models.map( (model) => {
         let { author, commit, html_url } = model;
         let data = {author, commit, html_url};
@@ -37,7 +37,7 @@ define(['mixins/PubSub',],
         console.log("Commits"," init");
       },
       add(api_url){
-        console.log("Commits"," add"," api_url:",api_url);
+        //console.log("Commits"," add"," api_url:",api_url);
         fetch(api_url, {method:'get'})
           .then( (resp) => resp.json() )
           .then( (json) => _transform(json) )

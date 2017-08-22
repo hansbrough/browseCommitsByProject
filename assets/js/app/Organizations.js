@@ -29,7 +29,7 @@ define(['mixins/PubSub',],
         console.log("Organizations"," init");
       },
       add(orgName){
-        console.log("Commits"," add"," org:",orgName);
+        //console.log("Organization"," add"," org:",orgName);
         if(orgName){
           let api_url = 'https://api.github.com/orgs/'+orgName
           fetch(api_url, {method:'get'})

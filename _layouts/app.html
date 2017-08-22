@@ -20,22 +20,24 @@ layout: default_app
     <div class="grid">
       <div class="col-1-3 repos">
         <h3>Repos</h3>
-        <li class="small sort-filter-title">Sorting
+
+        <div class="small sort-filter-title">Sorting
           <div class="sortable-mixin align-right">
             <span class="sort-trigger"><span class="current-sort-item on-dark-background">A-Z</span></span>
-            <ul class="weight-book sort-options-list patient-list" aria-hidden="true">
+            <ul class="weight-book sort-options-list repo-list" aria-hidden="true">
               <li><a class="nav-link" data-sort-type="alpha">A-Z</a></li>
-              <li><a class="nav-link" data-sort-type="unread">Forks</a></li>
-              <li><a class="nav-link" data-sort-type="most-time">Watchers</a></li>
+              <li><a class="nav-link" data-sort-type="forks">Forks</a></li>
+              <li><a class="nav-link" data-sort-type="watchers">Watchers</a></li>
             </ul>
           </div>
-        </li>
+        </div>
+
         <ul id="repo_list"></ul>
       </div>
-      <div class="col-2-3 commits">
-        <h3>Commits</h3>
+      <section class="col-2-3 commits">
+        <h3 class="section-title">Commits</h3>
         <ul id="commits_list" class="commit-group"></ul>
-      </div>
+      </section>
     </div
   </div>
 
