@@ -19,11 +19,22 @@
 
   .org-search {
     border-bottom: 2px solid $darkGray;
+    color: $mediumDarkGray;
     padding-bottom: 10px;
     margin-bottom: 10px;
 
     .find-by-name {
       width:100%;
+    }
+
+    .repo-icon {
+      color: #959da5;
+      fill: currentColor;
+      margin-top: 5px;
+    }
+
+    .current-organization {
+
     }
   }
 

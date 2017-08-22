@@ -28,9 +28,10 @@ define([
 
         _RPS.init();
 
-        //mediate some UI events
+        //mediate some events
         PubSub.subscribe('repo:item:click', _CMTS.add );
         PubSub.subscribe('search:input:entered', _ORG.add );
+        PubSub.subscribe('org:store:set', _RPS.add );
       }
     };
 
