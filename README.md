@@ -27,6 +27,16 @@ A simple interactive UI to display a list of an arbitrary user-specified organiz
 * Top level App object helps by mediating events so that 'Models' subscribe to nada
 * Tried to avoid brittle prototypal class hierarchies by using a mixin pattern.
 
+### Manual Testing
+* On page load Netflix repo's should load
+* clicking a repo name should display a page of most recent commits in alpha ascending
+* clicking a selection from the 'sortable' widget should re-order existing repos accordingly (alpha, forks, watchers)
+* entering a valid organization name into the search field and pressing return/enter should fetch and display a list of assoc repos
+* entering a valid organization name into the search field and pressing return/enter should update the current org string in topbar
+* entering a *invalid* organization name into the search field and pressing return/enter should clear the current org string in topbar
+* clicking the abbr sha for a commit should open a new tab with the associated commit details page
+
+
 ### TODOS
 * several optimizations marked in js - `/assets/js`
 * sync sort state in UI when user searches for a new repo. for example if u sort the Netflix repos by 'watchers' then search for twitter
@@ -38,3 +48,4 @@ A simple interactive UI to display a list of an arbitrary user-specified organiz
 * constrain height of page container and force nav / body to scroll
 * bigger select target for repo links. better styling on select
 * run a transpiler to port es6 syntax to older browsers
+* pagination through repos. currently 1 request is made for first 100 results.
