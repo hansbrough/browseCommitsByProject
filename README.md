@@ -26,3 +26,15 @@ A simple interactive UI to display a list of an arbitrary user-specified organiz
 * 'View' objects responsible for rendering in response to data store change events ('set', 'sort')
 * Top level App object helps by mediating events so that 'Models' subscribe to nada
 * Tried to avoid brittle prototypal class hierarchies by using a mixin pattern.
+
+### TODOS
+* several optimizations marked in js - `/assets/js`
+* sync sort state in UI when user searches for a new repo. for example if u sort the Netflix repos by 'watchers' then search for twitter
+ the returned repos will be alpha order but sortable widget UI stays on 'watchers'. Alternatively just display repos in 'watchers' order.
+* Display message in UI when an invalid organization is submitted via search input
+* default select first repo in list, + display assoc commits
+* add currently selected repo name to display in topbar area
+* use lib like moment.js to format datetime string
+* constrain height of page container and force nav / body to scroll
+* bigger select target for repo links. better styling on select
+* run a transpiler to port es6 syntax to older browsers

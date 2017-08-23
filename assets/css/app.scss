@@ -51,6 +51,15 @@
 
     .repo-commits {
       color:$lightGray;
+
+      &.active {
+        border-bottom:2px solid $lightGray;
+        font-style: italic;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
   }
 
