@@ -17,6 +17,35 @@ A simple interactive UI to display a list of an arbitrary user-specified organiz
 * Clientside files (js, css etc) located in `/assets`
 * scss located in `_sass\` which is a convenience set up by jekyll
 
+### Architecture
+
+#### Object Hierarchy
+The parent App file is initialized by requirejs (which is used for module loading). The App object creates versions of the data stores which are each responsible for fetching, transforming and storing json returned by a single Github api. For example the Repos store uses a given organization name to fetch a list of associated repositories. The parent App object then goes on to create and initialize views corresponding to each of the stores. Views are each responsible for a discreet part of the UI; they render, assign dom behaviors, respond to custom events from other parts of the app and may extend themselves further by using mixins as in the case of the 'Sortable' behavior mixin. Mixins are meant to be reusable and handle some well defined task. For example the PubSub mixin is used by all the App's objects as a communications channel. The diagram below helps to illustrate how the pieces fit together.
+
+![Object Hierarchy Diagram](https://user-images.githubusercontent.com/658255/29934750-2d1f9066-8e31-11e7-9296-aa864b096c01.png)
+
+#### Messaging Between Components
+Each of the objects uses event messaging to stay informed of what's happening and avoid tight coupling with other objects within the app. The diagram below shows a simple example of messaging where the Repo store publishes that it's just been set (made an api call and saved the response json). The event is relayed to any interested subscribers - in this case the Repos View which in turn renders any models sent as an event payload.
+
+![Simple Messaging example](https://user-images.githubusercontent.com/658255/29938394-71ebdd74-8e3d-11e7-89b1-cbc71d287708.png)
+
+A more complex example would involve the user entering an organization name in the search field and eventually triggering a re-render of the Repos View. That event flow would look like the diagram below:
+
+![Search Messaging example](https://user-images.githubusercontent.com/658255/29939876-475b50a8-8e42-11e7-839f-03a1c3f0a78e.png)
+
+Here's a breakdown for the above:
+
+1. User enters a search term and publishes the 'search:input:entered' event.
+
+2. The parent App js catches the event and uses it's reference to the Organization Store to trigger a fetch of info for the org in question.
+
+3. The Organization Store sets the github api json response and publishes the 'org:store:set' event.
+
+4. The parent App js catches the org event and uses it's reference to the Repos Store to trigger a fetch of repos for the org in question.
+
+5. The Repos store sets the github api json response and publishes the 'repo:store:set' which is eventually caught by the Repos View and triggers a render of all the new repo models.
+
+The above approach gets objects loosely coupled (with the exception of the parent app object). Stores and Views do not need to know about the internals of each other - or that one another even exists. This makes product changes less prone to breaking down the road.
 
 ### Approach
 * minimal use of outside libraries - just Handlebars and requirejs
